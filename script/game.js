@@ -263,11 +263,15 @@
             }
             var elapsed = (new Date() - this.clock) / 1000;
          
-            var l = this.wifi.CheckSignal(this.player.strength);
+            this.wifi.CheckSignal();
             this.gameInfo.update(this.player.strength, this.player.score(), elapsed);
-            this.player.mob.update(this.player, l);
+            this.player.mob.update(this.player, this.wifi.users);
 
-            if(elapsed > 600){
+            if(elapsed> 240)
+            {
+                this.maxEnemy = 32;
+            }
+            if(elapsed > 480){
                 this.gameOver();
             }
 

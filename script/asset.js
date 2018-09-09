@@ -113,7 +113,7 @@
 					frame:this.frame, 					
 					src:this.currentAnim
                 });
-                this.mob.online = (this.strength>0);
+            this.mob.online = (this.strength>0);
         },
         render: function(ctx) {
             this.sprite.Render();
@@ -310,7 +310,7 @@
         this.active = false;
         this.x = 0;
         this.y = 0;
-        this.users = {troll:0, hate:0};
+        this.users = {troll:0, hater:0};
         this.ranges = [];  
         this.strength = 0;
     };
@@ -319,6 +319,7 @@
         reset: function(){
             this.active = false;
             this.ranges = [];
+            this.users = {troll:0, hate:0};
             this.x = Util.Rnd(32, this.bounds.wt);
             this.y = Util.Rnd(32, this.bounds.ht);
 
@@ -331,7 +332,7 @@
         InRange: function (obj, reset){
             var s = 0;
             if(this.enabled){
-                this.numusers = (reset) ? 0 :this.numusers;
+                this.users = (reset) ? {troll:0, hater:0} :this.users;
 
                 var dist = Math.sqrt( ((this.x-obj.x) * (this.x-obj.x))+((this.y-obj.y) * (this.y-obj.y)) );
                 for(var i = 0; i < this.ranges.length; i++){
@@ -339,17 +340,22 @@
                         s = i+1;
                     }
                 }
-                
-                this.numusers = (s > 0) ? this.numusers+1 : this.numusers;                
+                if(s > 0){
+                    if(obj.type == Const.actors.troll){
+                        this.users.troll++;
+                    }
+                    else if(obj.type == Const.actors.hater){
+                        this.users.hater++;
+                    }
+                }              
             }
             return s;
         },
-        CheckSignal: function(dist){
-            if(this.numusers > 8)
+        CheckSignal: function(){
+            if(this.users.troll + this.users.hater > 8)
             {
                 this.reset();
             }
-            return this.numusers;
         }
     };
 
@@ -412,10 +418,10 @@
                     if(ct[i].txt){
                         var t = ct[i].txt;
                         if(t == "[like]"){
-                            t = "Likes " + this.pscore.like;
+                            t = "Likes " + this.pscore.likes;
                         }
                         if(t == "[hate]"){
-                            t = "Hate " + this.pscore.hate;
+                            t = "Hate " + this.pscore.hates;
                         }
                         if(ct[i].img)
                         {
@@ -461,11 +467,11 @@
                     c, c, 1, 1);
                 }
 
-                var c = parseInt(this.clock/6);
+                var cl = parseInt(this.clock/8);
 
-                Renderer.DrawText("Likes: "+this.score.like+" Hates: " + this.score.hate, this.width/2, 32, Const.game.h3Font, '#ffffff');
+                Renderer.DrawText("Likes: "+this.score.likes+" Hates: " + this.score.hates, this.width/2, 32, Const.game.h3Font, '#ffffff');
 
-                Renderer.DrawText("Time til mom: "+ (60-c), this.width/4, 32, Const.game.h3Font, '#ffffff');
+                Renderer.DrawText("Time til mom: "+ (60-cl), this.width/4, 32, Const.game.h3Font, '#ffffff');
             }
 
         }
@@ -485,14 +491,14 @@
         this.x = 0;
         this.txts = [];
         this.strength; 
-        this.leeches;
+        this.leeches = {troll:0, hater:0};
         this.txt = {msg:null, count:0};
-        this.social = {like:0, hate:0};
+        this.social = {likes:0, hates:0};
     };
 
     Device.prototype = {
         reset: function(){
-            this.social = {like:0, hate:0};
+            this.social = {likes:0, hates:0};
         },
         enable: function (strength){
             this.enabled = !this.enabled;
@@ -508,19 +514,14 @@
             }
         },
         send: function (){
-            if(this.ready){
+            if(this.online && this.ready){
                 this.txts.push({txt:this.txt.msg, like:0});
                 this.enabled = false;
                 this.ready = false;
 
-                var l = ((4+this.strength) - this.leeches);
-                if(l > 0){
-                    this.social.like = Util.Rnd(0, l);
-                }
-                else if(l < 0){
-                    this.social.hate = Util.Rnd(0, 10+l);
-                }
-
+                this.social.likes += Util.Rnd(0, 8-this.leeches.troll);
+                this.social.hates += Util.Rnd(0, this.leeches.hater);
+                
                 return true;
             }
             return false;
@@ -535,7 +536,7 @@
                 Renderer.DrawBox({x:this.x+this.dim.sx, y:this.y+this.dim.sy, width:this.dim.sw, height:this.dim.sh}, '#ffffff', '#cccccc', 8, 0.7);
                 
                 Renderer.DrawBox({x:this.x+this.dim.sx+this.dim.sw-40, y:this.y+this.dim.sy+this.dim.sh+20, 
-                    width:40, height:20}, (this.ready) ? '#00ff00' : '#555555', '#cccccc', 8, 0.8);
+                    width:40, height:20}, (this.online && this.ready) ? '#00ff00' : '#555555', '#cccccc', 8, 0.8);
                 
                 if(this.online){
                     if(this.txt.count > 0){
