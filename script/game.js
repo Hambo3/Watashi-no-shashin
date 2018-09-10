@@ -268,14 +268,12 @@
             this.gameInfo.update(this.player.strength, this.player.score(), elapsed);
             this.player.mob.update(this.player, this.wifi.users);
 
-            //if(elapsed> 240)
-            //{
-                this.maxEnemy = parseInt(elapsed / 16)+16;
-            //}
+            this.maxEnemy = parseInt(elapsed / 16)+16;
+
             if(elapsed > 480){
                 this.gameOver();
             }
-            this.gameInfo.debug = "["+this.maxEnemy+"]["+ this.badguys.Count() + "]";
+this.gameInfo.debug = "["+this.maxEnemy+"]["+ this.badguys.Count() + "]";
 
         },
         render: function() {

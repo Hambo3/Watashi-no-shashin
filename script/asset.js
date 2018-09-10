@@ -257,7 +257,7 @@
                 {
                    this.reset();
                    this.timers.wait = Util.Rnd(120, 240);
-                   if(!this.visible && Util.Rnd(0, 2) == 0)
+                   if(!this.visible && Util.Rnd(0, 5) == 0)
                    {
                     this.enabled = false;
                    }
@@ -265,7 +265,7 @@
 
                 if(--this.timers.walk < 0){
                     this.reset();
-                    if(!this.visible && Util.Rnd(0, 3) == 0)
+                    if(!this.visible && Util.Rnd(0, 4) == 0)
                    {
                     this.enabled = false;
                    }
@@ -390,7 +390,7 @@
                 {font:Const.game.h3Font, txt:"    [W]"},
                 {font:Const.game.h3Font, txt:"[A] [D] [F] / [arrow keys] Movement"},
                 {font:Const.game.h3Font, txt:"[B] to open mobile"},
-                {font:Const.game.h3Font, txt:"[SPACE] to type txt, [RETURN] to sendb"}
+                {font:Const.game.h3Font, txt:"[SPACE] to type txt, [RETURN] to send"}
             ],          
             [
                 {font:Const.game.h2Font, txt:"Well done Tony, your a real hero now"},
