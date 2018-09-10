@@ -9,7 +9,7 @@
         this.mapPw = this.map.MapSize().width - 64;
         this.mapPh = this.map.MapSize().height - 64;
 
-        this.maxEnemy = 16;
+        this.maxEnemy = 8;
 
         this.clock;
         this.decider = 0;
@@ -65,7 +65,7 @@
 
                         this.Asset.wifi.enabled = true;
                         this.Asset.wifi.reset();
-
+                        this.Asset.maxEnemy = 8;
                         this.Asset.clock = new Date();
                     }
                 }
@@ -182,7 +182,7 @@
                     e.y = Util.Rnd(32, this.mapPh);
                     vis = this.map.IsVisible(e);
                     cp = this.CheckCollisions(e, clxpool);
-                }while(!vis && !cp && this.map.mapCollision(e, true) );
+                }while(vis || cp || this.map.mapCollision(e, true) );
 
                 e.set(this.player,this.wifi, {wt:this.mapPw, ht:this.mapPh}, 
                     (Util.Rnd(0, 4) == 0) ? Const.actors.hater : Const.actors.troll);
@@ -192,6 +192,7 @@
             this.decider = Util.Rnd(120, 240);
         },
         gameOver: function(){
+            this.maxEnemy = 8;
             this.player.stop();
             this.gameInfo.enabled = false;
             this.mainTitle.pscore = this.player.score();
@@ -267,13 +268,14 @@
             this.gameInfo.update(this.player.strength, this.player.score(), elapsed);
             this.player.mob.update(this.player, this.wifi.users);
 
-            if(elapsed> 240)
-            {
-                this.maxEnemy = 32;
-            }
+            //if(elapsed> 240)
+            //{
+                this.maxEnemy = parseInt(elapsed / 16)+16;
+            //}
             if(elapsed > 480){
                 this.gameOver();
             }
+            this.gameInfo.debug = "["+this.maxEnemy+"]["+ this.badguys.Count() + "]";
 
         },
         render: function() {

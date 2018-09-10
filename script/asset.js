@@ -206,7 +206,7 @@
                 else{
                     this.target = this.player;    
                 }
-                this.max = Util.Rnd(2, 3.5);
+                this.max = Util.Rnd(2, 4.5);
                 this.timers = {wait:0, walk:9000}; 
                 this.chasing = true;
             }
@@ -265,7 +265,7 @@
 
                 if(--this.timers.walk < 0){
                     this.reset();
-                    if(!this.visible && Util.Rnd(0, 2) == 0)
+                    if(!this.visible && Util.Rnd(0, 3) == 0)
                    {
                     this.enabled = false;
                    }
@@ -449,6 +449,7 @@
         this.width = screen.width;
         this.height = 64;
         this.clock;
+        this.debug;
     };
 
     Info.prototype = {
@@ -472,6 +473,8 @@
                 Renderer.DrawText("Likes: "+this.score.likes+" Hates: " + this.score.hates, this.width/2, 32, Const.game.h3Font, '#ffffff');
 
                 Renderer.DrawText("Time til mom: "+ (60-cl), this.width/4, 32, Const.game.h3Font, '#ffffff');
+
+                Renderer.DrawText( this.debug, this.width/4, 60, Const.game.h3Font, '#ffffff');
             }
 
         }
