@@ -1,8 +1,5 @@
-//私の写真
-//Watashi no shashin
-
 (function() {
-    function Gordon(levelMap) {
+    function Watashi(levelMap) {
         this.map = new MapManager();
         this.map.SetMap(levelMap);
 
@@ -77,7 +74,7 @@
         });
     };
 
-    Gordon.prototype = {
+    Watashi.prototype = {
         GetAbsHitBox: function (xp, yp, box){
 			return {
 					x:xp+box.l, y:yp+box.t, 
@@ -273,7 +270,6 @@
             if(elapsed > 300){
                 this.gameOver();
             }
-this.gameInfo.debug = "["+this.maxEnemy+"]["+ this.badguys.Count() + "]";
 
         },
         render: function() {
@@ -297,5 +293,5 @@ this.gameInfo.debug = "["+this.maxEnemy+"]["+ this.badguys.Count() + "]";
         }
     };
 
-    window.Gordon = Gordon;
+    window.Watashi = Watashi;
 })();

@@ -129,7 +129,7 @@ function Start(canvasBody)
 
 function init()
 {  
-	game = new Gordon(map);
+	game = new Watashi(map);
 	Asset = game;
 
     var now = timestamp();	

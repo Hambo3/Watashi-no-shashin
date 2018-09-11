@@ -449,7 +449,6 @@
         this.width = screen.width;
         this.height = 64;
         this.clock;
-        this.debug;
     };
 
     Info.prototype = {
@@ -475,7 +474,6 @@
                 Renderer.SetContext(1,1);
                 Renderer.DrawText("Time til mom: "+ (60-cl), this.width/4, 32, Const.game.h3Font, '#ffffff');
                 Renderer.DrawText("     "+this.score.likes+"                " + this.score.hates, this.width/2, 36, Const.game.h3Font, '#ffffff');
-                Renderer.DrawText( this.debug, this.width/4, 60, Const.game.h3Font, '#ffffff');
             }
 
         }
@@ -550,7 +548,7 @@
                     Renderer.Sprite(this.x+(this.dim.wd/2), this.y+this.dim.sy+(this.dim.sh/2), 'selfie', 0, 8, 0, 1);
                     
                 }else{
-                    this.tmsg("OFFLINE", 8, this.y+this.dim.sy+(this.dim.sh/2));
+                    this.tmsg(" OFFLINE", 8, this.y+this.dim.sy+(this.dim.sh/2));
                 }
             }
         },

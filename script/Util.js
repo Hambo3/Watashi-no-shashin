@@ -55,6 +55,7 @@ var Const = {
         'Need a charge point, lol',
         'Outside Pret lol',
         'Going to get new shoes',
-        'Where can I get a doughnut']
+        'Where can I get a doughnut',
+        'I always wanted to be a lumberjack']
     }
 }
