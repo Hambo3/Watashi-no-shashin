@@ -393,9 +393,11 @@
                 {font:Const.game.h3Font, txt:"[SPACE] to type txt, [RETURN] to send"}
             ],          
             [
-                {font:Const.game.h2Font, txt:"Well done Tony, your a real hero now"},
-                {txt:"[like]"},
-                {txt:"[hate]"},
+                {font:Const.game.h2Font, txt:"Tony, your followers thank you."},
+                {txt:null},
+                {txt:"Likes: [like]"},
+                {txt:"Dislikes: [hate]"},{txt:null},
+                {txt:"Score: [score]"}
             ]
         ];
     };
@@ -415,14 +417,12 @@
 
                 for(var i = 0; i<ct.length; i++){    
                     x = this.dim.x + 32;                
-                    if(ct[i].txt){
+                    if(ct[i].txt){9
                         var t = ct[i].txt;
-                        if(t == "[like]"){
-                            t = "Likes " + this.pscore.likes;
-                        }
-                        if(t == "[hate]"){
-                            t = "Hate " + this.pscore.hates;
-                        }
+                        t = t.replace("[like]",this.pscore.likes);
+                        t = t.replace("[hate]",this.pscore.hates);
+                        t = t.replace("[score]", ((this.pscore.likes*45000) - (this.pscore.hates*17000)));
+
                         if(ct[i].img)
                         {
                             Renderer.Sprite(x+160, y, ct[i].img, 0, 4, 0, 1);
@@ -468,7 +468,7 @@
                     c, c, 1, 1);
                 }
 
-                var cl = parseInt(this.clock/8);
+                var cl = parseInt(this.clock/5);
 
                 Renderer.Sprite(this.width/2, 32, 'like', 0, 3, 0, 1);
                 Renderer.Sprite((this.width/2)+80, 32, 'nolike', 0, 3, 0, 1);

@@ -268,9 +268,9 @@
             this.gameInfo.update(this.player.strength, this.player.score(), elapsed);
             this.player.mob.update(this.player, this.wifi.users);
 
-            this.maxEnemy = parseInt(elapsed / 16)+16;
+            this.maxEnemy = parseInt(elapsed / 14)+16;
 
-            if(elapsed > 480){
+            if(elapsed > 300){
                 this.gameOver();
             }
 this.gameInfo.debug = "["+this.maxEnemy+"]["+ this.badguys.Count() + "]";
