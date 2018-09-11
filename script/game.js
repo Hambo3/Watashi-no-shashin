@@ -28,10 +28,12 @@
 
         this.player.mob = new Device(this.map.ScreenSize(), this.map.MapSize());
 
+        //timer for random game decisions
         this.decider = Util.Rnd(120, 240);
 
+
         input.onKeyUp(function(k){
-            if(this.Asset.player.enabled)
+            if(this.Asset.player.enabled)//in game kwy up events
             {
                 if (k == 'B') { 
                     this.Asset.player.txt();
@@ -47,7 +49,7 @@
                 }
             }
             else{
-                if(k=='B')
+                if(k=='B')//title screen events
                 {
                     if(this.Asset.mainTitle.screen ==2){
                         this.Asset.mainTitle.screen =0;
@@ -63,6 +65,12 @@
                         this.Asset.wifi.enabled = true;
                         this.Asset.wifi.reset();
                         this.Asset.maxEnemy = 8;
+ 
+                        //clear badguys that are off screen. otherwise on 2nd play badguys could still be around from last game
+                        var doods = this.Asset.badguys.Get();
+                        for (var i = 0; i < doods.length; i++) {
+                            doods[i].enabled = doods[i].visible;
+                        }
                         this.Asset.clock = new Date();
                     }
                 }
@@ -75,20 +83,20 @@
     };
 
     Watashi.prototype = {
-        GetAbsHitBox: function (xp, yp, box){
+        GetAbsHitBox: function (xp, yp, box){//gets a collider based on hitbox and coords
 			return {
 					x:xp+box.l, y:yp+box.t, 
 					width:Math.abs(box.r)-Math.abs(box.l),
 					height:Math.abs(box.b)-Math.abs(box.t)
 				};
 		},	
-		RectHit: function (prot, perp){
+		RectHit: function (prot, perp){ //if 2 rects overlap
 			return (prot.x < perp.x + perp.width &&
 				prot.x + prot.width > perp.x &&
 				prot.y < perp.y + perp.height &&
 				prot.height + prot.y > perp.y);
         },
-        IsTouching: function (prot, perp){
+        IsTouching: function (prot, perp){  
             var sides = {l:false, r:false, t:false, b:false};
             sides.l = ( (prot.x < perp.x + perp.width && prot.x > perp.x) &&
                         (prot.y+1 < perp.y + perp.height && prot.height + prot.y -1 > perp.y)
@@ -105,7 +113,7 @@
                     );    
 			return sides;
         }, 
-        CheckTouching: function(protagonist, perps){
+        CheckTouching: function(protagonist, perps){ //checks 1px around the hitbox for collisins prior to moving
             //determing touching player
             protagonist.touching = {l:false, r:false, t:false, b:false};
             for(var i = 0; i < perps.length; i++) {
@@ -120,7 +128,7 @@
                 }
             }
         },
-        CheckCollisions: function(obj, perps){
+        CheckCollisions: function(obj, perps){ //checks collisions. to allow slide, perform 2 additional checks to see which side
             
             //detect
             for(var i = 0; i < perps.length; i++) {
@@ -158,6 +166,7 @@
             return (h||v);
         }, 
         decisions: function(){
+            //random game events
             if(this.badguys.Count() < this.maxEnemy){   
                 var doods = this.badguys.Get();
                 var clxpool = [];   
@@ -223,7 +232,7 @@
                 this.player.logic(dt);
                 this.map.mapCollision(this.player, false);
 
-                //determin collisions 
+                //determine collisions 
                 this.CheckCollisions(this.player, enemies);
 
                 clxpool.push(this.player);

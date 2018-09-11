@@ -1,3 +1,4 @@
+//a generic object that all gameobjects inherit as their on screen presence
 var Sprite = function () {
     var src;
     var x = 0;

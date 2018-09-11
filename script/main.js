@@ -9,10 +9,10 @@ var rf = (function(){
       };
 })();
 
-var fileSource=	[	
-					{ src:'content/sprite.png', tag:"set" }
-				];
+var fileSource=	[{ src:'content/sprite.png', tag:"set" }];
 
+//sprite definitions
+//to save k's using 8x8px sprites that are scaled up by 4 in game
 var spriteDef = {
 	'selfie':{ tag:"set", src:[{x:32,y:0}],w:16,h:16},
 	'tile0':{ tag:"set", src:[{x:0,y:32}],w:8,h:8},
@@ -45,7 +45,7 @@ var Renderer = new Rendering();
 var game;
 var Asset;
 
-/*****************************/
+//map
 var map = {
 			set:'tile',
 			dimensions:{width:40, height:45},

@@ -1,3 +1,4 @@
+//handles map rendering and collisons
 var MapManager = function () {
     var map = {
         set:null,

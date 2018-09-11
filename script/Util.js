@@ -9,6 +9,7 @@ var Util = {
     }
 }
 
+// a v simple object pooler
 var ObjectPool = function () {
     var list = [];
 

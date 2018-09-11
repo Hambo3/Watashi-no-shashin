@@ -1,3 +1,5 @@
+//handles loading and keeps track of all graphics
+//performs all rendering operations
 var Rendering = function () {
     var spritesheet;
     var context;

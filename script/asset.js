@@ -302,6 +302,7 @@
     window.Enemy = Enemy;
 })();
 
+//wifi hotspot
 (function() {
     function WiFi(mapw, maph) {
  
