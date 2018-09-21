@@ -37,7 +37,7 @@ var Rendering = function () {
             y-=(s.h/2);
         }        
         context.drawImage(assets[s.tag], frame.x, frame.y, s.w, s.h, 
-            x, y, s.w, s.h);
+            Math.round(x), Math.round(yield), s.w, s.h);
     }
     
     function DrawSprite(x, y, sprite, spriteInd, s, r, a){
@@ -45,7 +45,7 @@ var Rendering = function () {
         var frame = spr.src[spriteInd];
         var w = spr.w;
         var h = spr.h;
-        context.setTransform(s, 0, 0,s ,x ,y); // set scale and position
+        context.setTransform(s, 0, 0,s ,Math.round(x) ,Math.round(y)); // set scale and position
         context.rotate(r);
         context.globalAlpha = a;
         context.drawImage(assets[spr.tag], frame.x, frame.y,
