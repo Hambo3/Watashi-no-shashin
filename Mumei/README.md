@@ -1,2 +1,0 @@
-# Mumei
-unnamed project
